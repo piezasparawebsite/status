@@ -2,7 +2,7 @@ https://piezasparawebsite.github.io/status/
 
 # como se usa ? :
 
-primero este reposiorio (proyecto)
+primero este repositorio (proyecto)
 va alojado en un dominio.
 
 ## otro server
