@@ -195,5 +195,126 @@
 
         window.onload = checkStatus;
     </script>
+
+    <script>
+            (function() {
+            // 1. Definir los Estilos CSS (Scoped)
+            const css = `
+                #custom-modal-overlay {
+                    position: fixed;
+                    top: 0; left: 0;
+                    width: 100%; height: 100%;
+                    background: rgba(0, 0, 0, 0.85);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 999999;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    font-family: sans-serif;
+                }
+
+                #custom-modal-content {
+                    background: #fff;
+                    width: 90%;
+                    max-width: 320px; /* Mobile First: 320px */
+                    border-radius: 8px;
+                    overflow: hidden;
+                    position: relative;
+                    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+                    transform: scale(0.8);
+                    transition: transform 0.3s ease;
+                }
+
+                #custom-modal-overlay.active { opacity: 1; }
+                #custom-modal-overlay.active #custom-modal-content { transform: scale(1); }
+
+                .modal-video-container {
+                    width: 100%;
+                    line-height: 0;
+                }
+
+                .modal-video-container video {
+                    width: 100%;
+                    height: auto;
+                }
+
+                .modal-footer {
+                    padding: 15px;
+                    text-align: center;
+                    background: #f9f9f9;
+                }
+
+                .modal-link {
+                    color: #007bff;
+                    text-decoration: none;
+                    font-weight: bold;
+                    font-size: 14px;
+                    word-break: break-all;
+                }
+
+                .modal-link:hover { text-decoration: underline; }
+
+                .close-modal-btn {
+                    position: absolute;
+                    top: 10px; right: 10px;
+                    background: rgba(0,0,0,0.5);
+                    color: white;
+                    border: none;
+                    border-radius: 50%;
+                    width: 30px; height: 30px;
+                    cursor: pointer;
+                    z-index: 10;
+                    font-size: 18px;
+                    line-height: 1;
+                }
+            `;
+
+            // 2. Inyectar CSS al <head>
+            const styleTag = document.createElement('style');
+            styleTag.textContent = css;
+            document.head.appendChild(styleTag);
+
+            // 3. Crear Estructura del Modal
+            const overlay = document.createElement('div');
+            overlay.id = 'custom-modal-overlay';
+
+            overlay.innerHTML = `
+                <div id="custom-modal-content">
+                    <button class="close-modal-btn">&times;</button>
+                    <div class="modal-video-container">
+                        <video controls autoplay muted playsinline>
+                            <source src="video1.mp4" type="video/mp4">
+                            Tu navegador no soporta videos.
+                        </video>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="https://mercancia.store/REiDS/" target="_blank" class="modal-link">
+                            Visitar mercancia.store/REiDS/
+                        </a>
+                    </div>
+                </div>
+            `;
+
+            // 4. Funciones de Cierre
+            const closeModal = () => {
+                overlay.classList.remove('active');
+                setTimeout(() => overlay.remove(), 300);
+            };
+
+            overlay.querySelector('.close-modal-btn').onclick = closeModal;
+            overlay.onclick = (e) => { if(e.target === overlay) closeModal(); };
+
+            // 5. Inyectar al Body y Mostrar
+            document.body.appendChild(overlay);
+            
+            // Pequeño timeout para que la transición de opacidad funcione
+            setTimeout(() => {
+                overlay.classList.add('active');
+            }, 10);
+
+        })();
+    </script>
+
 </body>
 </html>
